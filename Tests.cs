@@ -7,14 +7,15 @@ using AlzaProj.PageObjects;
 using System.Drawing;
 using System.IO;
 using System.Text.Json;
+using OpenQA.Selenium.Remote;
 
 namespace AlzaProj
 {
 	public class Tests
-	{
-		IWebDriver driver = new ChromeDriver(@"C:\Users\mkrajcovicova\Downloads\chromedriver1");
+	{		
 		Dictionary<string, string> config = new Dictionary<string, string>();
 		private StreamWriter LogFile;
+		private IWebDriver driver;
 		
 
 		[SetUp]
@@ -25,12 +26,18 @@ namespace AlzaProj
 			config = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
 
 			LogFile = new StreamWriter(@config["logPath"]);
-			
 
-			/*var options = new ChromeOptions();
-			options.PlatformName = "Windows 10";
-			options.BrowserVersion = "84";
-			RemoteWebDriver driver = new RemoteWebDriver(new Uri(""), options);			*/
+			if (config["seleniumHubUrl"] != "")
+			{
+				var options = new ChromeOptions();
+				options.PlatformName = "Windows 10";
+				options.BrowserVersion = "84";
+				driver = new RemoteWebDriver(new Uri(config["seleniumHubUrl"]), options);
+			}
+			else {
+				driver = new ChromeDriver(@"C:\Users\mkrajcovicova\Downloads\chromedriver1");
+			}
+			
 
 		}
 
@@ -77,10 +84,9 @@ namespace AlzaProj
 
 				foreach (var qa in QAposition)
 				{
-					counter++;
 					driver.Navigate().GoToUrl(qa);
 					position.LoadComplete();
-					Assert.AreEqual(expectedResultsPositionDescription[counter], position.getPositionDescription());
+					Assert.Contains(position.getPositionDescription(), expectedResultsPositionDescription);
 
 					var people = position.getPeople();
 
@@ -97,6 +103,7 @@ namespace AlzaProj
 					}
 					driver.Navigate().Back();
 					career.LoadComplete();
+					counter++;
 
 				}
 			}
