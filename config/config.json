@@ -1,0 +1,6 @@
+{
+	"logPath": "C:\\Temp\\log\\log.txt",
+	"screenPath":  "@\"C:\\Temp\\screen\\",
+	"seleniumHubUrl": "",
+	"sutUrl": "https://www.alza.cz/kariera"
+}
