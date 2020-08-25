@@ -112,7 +112,7 @@ namespace AlzaProj
 				try
 				{
 					Screenshot image = ((ITakesScreenshot)driver).GetScreenshot();
-					image.SaveAsFile(@"~..\..\..\..\..\error\Screenshot.png");
+					image.SaveAsFile(@"~..\..\..\..\..\Screenshot.png");
 				}
 				catch (Exception ex) {
 					LogFile.WriteLine("ERROR: " + ex);

@@ -48,8 +48,8 @@ namespace AlzaProj.PageObjects
             int index = url.IndexOf(")");
             var finalURL = url.Remove(index - 1, url.Length - index + 1).Remove(0, 23);
             WebClient webClient = new WebClient();
-            webClient.DownloadFile(finalURL, @"~..\..\..\..\..\download\" + imageName+".jpg");
-            return GetHash(new Bitmap(@"~..\..\..\..\..\download\" + imageName+".jpg"));
+            webClient.DownloadFile(finalURL, @"~..\..\..\..\..\" + imageName+".jpg");
+            return GetHash(new Bitmap(@"~..\..\..\..\..\" + imageName+".jpg"));
             
         }
 
